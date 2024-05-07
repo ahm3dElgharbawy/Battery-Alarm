@@ -1,3 +1,4 @@
+import 'package:battery_alarm/home/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
@@ -19,15 +20,26 @@ class BatteryAlarmCubit extends Cubit<BatteryAlarmState> {
     emit(BatteryAlarmDisabledState());
   }
 
-  launchAlarm() {
+  launchAlarm(BuildContext context) {
     if (alarmEnabled && !isAlarmRunning) {
       isAlarmRunning = true;
       FlutterRingtonePlayer.play(
-        android: AndroidSounds.alarm,
+        android: AndroidSounds.ringtone,
         ios: IosSounds.alarm,
         looping: true,
         volume: 0.1,
         asAlarm: false,
+      );
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => CustomAlertDialog(
+          onTap: () {
+            stopAlarm();
+            disableAlarm();
+            Navigator.pop(context);
+          },
+        ),
       );
     }
   }

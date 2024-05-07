@@ -5,17 +5,17 @@ import 'package:flutter/widgets.dart';
 part 'my_battery_state.dart';
 
 class MyBatteryCubit extends Cubit<MyBatteryState> {
-  MyBatteryCubit() : super(MyBatteryInitial());
+  MyBatteryCubit() : super(MyBatteryDischarging());
   int batteryLevel = 0;
   void myBatteryListening(Battery battery) {
     battery.onBatteryStateChanged.listen((BatteryState state) async {
       batteryLevel = await battery.batteryLevel;
       if (state == BatteryState.charging) {
-        emit(MyBatteryCharging(progress: batteryLevel));
+        emit(MyBatteryCharging());
       } else if (state == BatteryState.full) {
         emit(MyBatteryFull());
       } else {
-        emit(MyBatteryDischarging(progress: batteryLevel));
+        emit(MyBatteryDischarging());
       }
     });
   }

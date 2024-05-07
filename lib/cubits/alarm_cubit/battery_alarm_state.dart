@@ -5,3 +5,5 @@ sealed class BatteryAlarmState {}
 
 final class BatteryAlarmEnabledState extends BatteryAlarmState {}
 final class BatteryAlarmDisabledState extends BatteryAlarmState {}
+
+

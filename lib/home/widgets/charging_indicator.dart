@@ -12,11 +12,10 @@ class ChargingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<MyBatteryCubit>();
-
     return BlocConsumer<MyBatteryCubit, MyBatteryState>(
       listener: (context, state) {
         if (state is MyBatteryFull) {
-          context.read<BatteryAlarmCubit>().launchAlarm();
+          context.read<BatteryAlarmCubit>().launchAlarm(context);
         }
       },
       builder: (context, state) => SizedBox(
@@ -52,17 +51,14 @@ class ChargingIndicator extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Text(
-                        state is MyBatteryCharging
-                            ? bloc.batteryLevel.toString()
-                            : (state is MyBatteryFull)
-                                ? "100"
-                                : bloc.batteryLevel.toString(),
-                        style: const TextStyle(fontSize: 50,fontWeight: FontWeight.bold),
+                      Text(bloc.batteryLevel.toString(),
+                        style: const TextStyle(
+                            fontSize: 50, fontWeight: FontWeight.w500),
                       ),
                       const Text(
                         "%",
-                        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
